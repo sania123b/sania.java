@@ -1,0 +1,32 @@
+public class Solution
+{
+    public static Node removeKthNode(Node head, int K)
+    {
+        // Write your code here.
+        if(head==null){
+            return null;
+        }
+        int c=0;
+        Node temp=head;
+        Node t=head;
+        while(temp!=null){
+            temp=temp.next;
+            c++;
+        }
+        int d;
+        d=c-K;
+        if(d==0){
+            return head.next;
+        }
+        int i=0;
+        while(i!=d-1){
+            t=t.next;
+            i++;
+        }
+        Node q=t;
+        q.next=q.next.next;
+        return head;
+
+        
+}
+}
