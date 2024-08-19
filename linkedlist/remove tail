@@ -1,0 +1,48 @@
+class node{
+    int data;
+    node next;
+    node back;
+    node(int data1,node b1,node b2){
+        this.data=data1;
+        this.next=b1;
+        this.back=b2;
+    }
+    
+    
+}
+public class Main
+{
+    private static node convert(int a[]){
+	        node head=new node(a[0],null,null);
+	        node mover=head;
+	        for(int i=1;i<a.length;i++){
+	            node temp=new node(a[i],null,mover);
+	            mover.next=temp;
+	            mover=temp;
+	        }
+	        return head;
+    }
+    private static node remove(node head){
+        node m=head;
+        while(m.next!=null){
+            m=m.next;
+        }
+        node p=m.back;
+        p.next=null;
+        m.back=null;
+        
+        return head;
+    }
+	public static void main(String[] args) {
+	    
+		int a[]={1,2,3,4,5};
+		
+		node head=convert(a);
+		node t=head;
+		node h=remove(head);
+		while(h!=null){
+		    System.out.print(h.data+" ");
+		    h=h.next;
+		}
+	}
+}
