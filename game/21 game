@@ -1,0 +1,96 @@
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class Main {
+    // Method to generate a random card value (1-13) and its score
+    public static int getCardValue() {
+        int card = (int) Math.ceil(Math.random() * 13);
+        if (card > 10) {
+            return 10; // J, Q, K are worth 10
+        } else if (card == 1) {
+            return 1;  // Ace is worth 1
+        } else {
+            return card; // Number cards are worth their value
+        }
+    }
+
+    // Method to generate a random suit
+    public static String getCardSuit() {
+        int suit = (int) Math.ceil(Math.random() * 4);
+        switch (suit) {
+            case 1:
+                return "Clubs";
+            case 2:
+                return "Spades";
+            case 3:
+                return "Hearts";
+            default:
+                return "Diamonds";
+        }
+    }
+
+    // Method to get the card name (like "Ace", "Jack", etc.)
+    public static String getCardName(int cardValue) {
+        switch (cardValue) {
+            case 1:
+                return "Ace";
+            case 11:
+                return "Jack";
+            case 12:
+                return "Queen";
+            case 13:
+                return "King";
+            default:
+                return Integer.toString(cardValue);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        HashSet<String> drawnCards = new HashSet<>(); // To track drawn cards
+        int totalScore = 0;
+
+        System.out.println("Welcome to the game of 21!");
+        
+        while (true) {
+            System.out.println("Would you like to draw a card? (y/n): ");
+            String response = sc.next().toLowerCase();
+
+            if (response.equals("n")) {
+                System.out.println("Game over! Your final score is: " + totalScore);
+                break;
+            }
+
+            // Generate a unique card (value and suit)
+            String card;
+            int cardValue;
+            do {
+                cardValue = getCardValue();
+                String cardSuit = getCardSuit();
+                card = getCardName(cardValue) + " of " + cardSuit;
+            } while (drawnCards.contains(card));  // Ensure card hasn't been drawn before
+
+            drawnCards.add(card); // Track the card as drawn
+
+            // Add card value to total score
+            totalScore += cardValue;
+
+            // Display card and score
+            System.out.println("You drew: " + card);
+            System.out.println("Your total score is: " + totalScore);
+
+            // Check if the score exceeds 21
+            if (totalScore > 21) {
+                System.out.println("Busted! You exceeded 21. Game over.");
+                break;
+            }
+
+            // Check if the score is exactly 21
+            if (totalScore == 21) {
+                System.out.println("Congratulations! You hit 21!");
+                break;
+            }
+        }
+        sc.close();
+    }
+}
